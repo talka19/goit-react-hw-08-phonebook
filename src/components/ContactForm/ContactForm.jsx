@@ -2,8 +2,8 @@ import {useState} from "react";
 import {Form, LabelStyle,InputNameStyle, InputNumberStyle } from "components/ContactForm/ContactForm.styled"
 import { useDispatch, useSelector} from "react-redux";
 import toast from 'react-hot-toast';
-import { addContact} from "redux/operations";
-import { shownContacts } from "redux/selectors";
+import { addContact} from "redux/tasks/operations";
+import { shownContacts } from "redux/tasks/selectors";
 
 
 export function ContactForm () {

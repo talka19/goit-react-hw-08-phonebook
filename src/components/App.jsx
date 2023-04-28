@@ -1,54 +1,49 @@
-import {ContactList} from 'components/ContactsList/ContactsList';
-import {ContactForm} from './ContactForm/ContactForm';
-import Filter from 'components/Filter/Filter';
-import {TitleContacts, AllContacts} from 'components/App.styled';
-import { Toaster } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { shownContacts } from 'redux/selectors';
-import { fetchContacts } from 'redux/operations';
-
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { Contacts } from 'pages/Contacts';
+import  Login  from 'pages/Login';
+import  Register  from 'pages/Register';
+import  NotFound  from 'pages/NotFound';
+import { useAuth } from 'hooks';
+import { refreshUser} from 'redux/auth/operations';
+import { Layout } from './Layout/Layout';
+import { RestrictedRoute } from './RestrictedRoute';
+import { PrivateRoute } from './PrivateRoute';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(shownContacts);
-  
-  useEffect(()=> {
-    dispatch(fetchContacts());
+  const { isRefreshing } = useAuth();
+
+  useEffect(() => {
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-        <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          fontSize: 15,
-          color: '#010101',
-        }}
-      >
-      <Toaster
-            toastOptions={{
-            style: {
-            border: '1px solid #713200',
-            padding: '16px',
-            margin: '10px',
-          },
-        }}
-        position="top-right"
-      />
-        <h1>Phonebook</h1>
-        <ContactForm />
-        <TitleContacts>Contacts</TitleContacts>
-        <AllContacts>All contacts: {contacts.length}</AllContacts>
-        <Filter />
-        {/* {isLoading && <b>Loading ...</b>} */}
-        <ContactList />
-        </div>
-      )
   
-  }
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route 
+            path='contacts' 
+              element={
+                <PrivateRoute redirectTo="/login" component={<Contacts />} />
+              }/>
+          <Route 
+            path='login' 
+            element={
+              <RestrictedRoute redirectTo="/contacts" component={<Login />} />
+            }/>
+          <Route 
+            path='register' 
+            element={
+              <RestrictedRoute redirectTo="/contacts" component={<Register />} />
+            }/>
+          <Route path='*' element={<NotFound />} />
+        </Route>
+      </Routes>
+  );
+};
 
-  export default App
- 
+export default App

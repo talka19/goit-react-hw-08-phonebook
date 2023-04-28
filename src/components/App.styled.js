@@ -1,9 +1,13 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
-export const AllContacts = styled.div `
-    margin-bottom: 10px;
-`
-
-export const TitleContacts = styled.h2`
-    margin-top: 70px;
-`
+export const Container = styled.div`
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 6px;
+    box-shadow: 0px 2px 5px lightgrey;
+    padding: 15px 30px;
+`;

@@ -16,12 +16,6 @@ export const LabelStyle = styled.label `
   margin-bottom: 10px;
   color: #fff;
 `;
-   
-
-// export const labelChild = styled.last-child `
-//   margin-bottom: 0px;
-// `
-   
 
 
 export const InputNameStyle = styled.input `
@@ -31,3 +25,14 @@ export const InputNameStyle = styled.input `
 export const InputNumberStyle = styled.input ` 
  margin-left: 10px;
 `;  
+
+export const Button = styled.button`
+    margin: 25px 0 8px 0;
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px lightgrey;
+    height: 40px;
+    width: 105px;
+    background-color: lightcyan;
+    text-transform: lowercase;
+    font-weight: 700;
+`;
